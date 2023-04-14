@@ -1,0 +1,14 @@
+.empty-cart {
+  font-size: 32px;
+  font-weight: 500;
+  line-height: 32px;
+  color: rgb(202, 182, 182);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  mat-icon {
+    height: 32px;
+    width: 32px;
+    font-size: 32px;
+  }
+}

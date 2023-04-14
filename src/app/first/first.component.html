@@ -1,0 +1,18 @@
+<h2>First Component</h2>
+<div class="container">
+  <mat-card *ngFor="let product of products">
+    <mat-card-header>
+      <mat-card-title>{{ product.name }}</mat-card-title>
+      <mat-card-subtitle>{{ product.category }}</mat-card-subtitle>
+    </mat-card-header>
+    <mat-card-content>
+      <p class="description">{{ product.description }}</p>
+      <p class="price">
+        <span>Price:</span><strong>{{ product.price }}$</strong>
+      </p>
+    </mat-card-content>
+    <mat-card-actions>
+      <button mat-raised-button color="primary">Buy</button>
+    </mat-card-actions>
+  </mat-card>
+</div>

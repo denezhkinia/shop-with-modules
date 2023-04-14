@@ -1,0 +1,11 @@
+<h2>Cart List</h2>
+<div *ngIf="(products$ | async)?.length; else emptyCart" class="wrapper">
+  <swm-cart
+    *ngFor="let product of products$ | async; trackBy: trackById"
+    [product]="product"
+  ></swm-cart>
+</div>
+
+<ng-template #emptyCart>
+  <p class="empty-cart"><mat-icon>store</mat-icon>Cart is empty</p>
+</ng-template>

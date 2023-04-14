@@ -1,0 +1,26 @@
+.price {
+  display: flex;
+  justify-content: space-between;
+  span,
+  strong {
+    display: inline-block;
+  }
+}
+
+mat-card-header {
+  margin-bottom: 16px;
+}
+
+mat-card {
+  margin-right: 8px;
+  width: 200px;
+}
+
+button {
+  width: 100%;
+}
+
+.description,
+mat-card-content {
+  min-height: 50px;
+}

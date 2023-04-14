@@ -1,0 +1,24 @@
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>{{ product.name }}</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <div class="product-count">
+      <button mat-icon-button (click)="onMinus(product.id)">
+        <mat-icon>remove</mat-icon></button
+      >{{ product.productCount }}
+      <button mat-icon-button (click)="onPlus(product.id)">
+        <mat-icon>add</mat-icon>
+      </button>
+    </div>
+    <p class="price">
+      <span>Price:</span
+      ><strong>{{ product.price * product.productCount }}$</strong>
+    </p>
+  </mat-card-content>
+  <mat-card-actions>
+    <button mat-raised-button color="warn" (click)="onDelete(product.id)">
+      Delete
+    </button>
+  </mat-card-actions>
+</mat-card>
