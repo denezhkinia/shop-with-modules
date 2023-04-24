@@ -7,6 +7,10 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class CartControllerService {
+// чтобы не писать сокращение Subj, есть такой вариант
+// $$ - для сабджектов
+// $ - для обзервбл
+
   private cartProductsSubj$ = new BehaviorSubject<CartModel[]>([]);
   cartProducts$ = this.cartProductsSubj$.asObservable();
 

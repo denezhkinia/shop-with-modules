@@ -8,7 +8,7 @@ const MatModules = [MatCardModule, MatButtonModule, MatIconModule];
 
 @NgModule({
   declarations: [],
-  imports: [CommonModule, ...MatModules],
+  imports: [CommonModule],
   exports: [...MatModules],
 })
 export class SharedModule {}

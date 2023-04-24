@@ -10,6 +10,9 @@ import { ProductModel } from '../../models/product.model';
 export class ProductListComponent implements OnInit {
   products!: Array<ProductModel>;
 
+  // можете оставить такие названия для себя, но, думаю, что общего словаря
+  // между React и Angular не будет и лучше использовать те сущности, которые есть
+  // в Angular
   constructor(private controller: ProductsControllerService) {}
 
   ngOnInit() {
