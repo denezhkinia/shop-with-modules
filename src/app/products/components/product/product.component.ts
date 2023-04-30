@@ -1,6 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { ProductModel } from '../../models/product.model';
-import { CartControllerService } from 'src/app/cart/services/cart.controller.service';
 
 @Component({
   selector: 'swm-product',
@@ -9,12 +8,9 @@ import { CartControllerService } from 'src/app/cart/services/cart.controller.ser
 })
 export class ProductComponent {
   @Input() product!: ProductModel;
-
-  // тут не надо внедрять зависимость
-  // реализуйте через output
-  constructor(private cartController: CartControllerService) {}
+  @Output() buy = new EventEmitter<ProductModel>();
 
   onBuy() {
-    this.cartController.addNewProduct(this.product);
+    this.buy.emit(this.product);
   }
 }

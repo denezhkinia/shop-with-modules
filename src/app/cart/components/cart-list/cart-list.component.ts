@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { CartControllerService } from '../../services/cart.controller.service';
+import { CartService } from '../../services/cart.service';
 import { CartModel } from '../../models/cart.model';
 
 @Component({
@@ -8,11 +8,23 @@ import { CartModel } from '../../models/cart.model';
   styleUrls: ['./cart-list.component.scss'],
 })
 export class CartListComponent {
-  products$ = this.controller.cartProducts$;
+  products$ = this.cartService.cartProducts$;
 
-  constructor(private controller: CartControllerService) {}
+  constructor(private cartService: CartService) {}
 
   trackById(index: number, product: CartModel) {
     return product.id;
+  }
+
+  onDelete(id: number) {
+    this.cartService.deleteProduct(id);
+  }
+
+  onPlus(id: number) {
+    this.cartService.plusCount(id);
+  }
+
+  onMinus(id: number) {
+    this.cartService.minusCount(id);
   }
 }

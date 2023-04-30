@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ProductsControllerService } from '../../services/products.controller.service';
+import { ProductsService } from '../../services/products.service';
 import { ProductModel } from '../../models/product.model';
+import { CartService } from 'src/app/cart/services/cart.service';
 
 @Component({
   selector: 'swm-product-list',
@@ -10,12 +11,16 @@ import { ProductModel } from '../../models/product.model';
 export class ProductListComponent implements OnInit {
   products!: Array<ProductModel>;
 
-  // можете оставить такие названия для себя, но, думаю, что общего словаря
-  // между React и Angular не будет и лучше использовать те сущности, которые есть
-  // в Angular
-  constructor(private controller: ProductsControllerService) {}
+  constructor(
+    private productsService: ProductsService,
+    private cartService: CartService
+  ) {}
 
   ngOnInit() {
-    this.products = this.controller.getProducts();
+    this.products = this.productsService.getProducts();
+  }
+
+  onBuy(product: ProductModel) {
+    this.cartService.addNewProduct(product);
   }
 }

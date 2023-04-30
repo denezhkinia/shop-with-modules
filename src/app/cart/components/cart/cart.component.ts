@@ -1,6 +1,5 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { CartModel } from '../../models/cart.model';
-import { CartControllerService } from '../../services/cart.controller.service';
 
 @Component({
   selector: 'swm-cart',
@@ -9,19 +8,19 @@ import { CartControllerService } from '../../services/cart.controller.service';
 })
 export class CartComponent {
   @Input() product!: CartModel;
-
-  // я бы не внедрял зависимость, а реализовал через output
-  constructor(private controller: CartControllerService) {}
+  @Output() delete = new EventEmitter<number>();
+  @Output() plus = new EventEmitter<number>();
+  @Output() minus = new EventEmitter<number>();
 
   onDelete(id: number) {
-    this.controller.deleteProduct(id);
+    this.delete.emit(id);
   }
 
   onPlus(id: number) {
-    this.controller.plusCount(id);
+    this.plus.emit(id);
   }
 
   onMinus(id: number) {
-    this.controller.minusCount(id);
+    this.minus.emit(id);
   }
 }

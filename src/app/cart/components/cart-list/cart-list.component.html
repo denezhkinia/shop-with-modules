@@ -3,6 +3,9 @@
   <swm-cart
     *ngFor="let product of products$ | async; trackBy: trackById"
     [product]="product"
+    (delete)="onDelete($event)"
+    (plus)="onPlus($event)"
+    (minus)="onMinus($event)"
   ></swm-cart>
 </div>
 

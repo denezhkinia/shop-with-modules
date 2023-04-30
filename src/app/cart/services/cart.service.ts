@@ -6,20 +6,16 @@ import { BehaviorSubject } from 'rxjs';
 @Injectable({
   providedIn: 'root',
 })
-export class CartControllerService {
-// чтобы не писать сокращение Subj, есть такой вариант
-// $$ - для сабджектов
-// $ - для обзервбл
-
-  private cartProductsSubj$ = new BehaviorSubject<CartModel[]>([]);
-  cartProducts$ = this.cartProductsSubj$.asObservable();
+export class CartService {
+  private cartProducts$$ = new BehaviorSubject<CartModel[]>([]);
+  cartProducts$ = this.cartProducts$$.asObservable();
 
   addNewProduct(product: ProductModel) {
     if (this.isProductInCart(product.id)) {
       this.addProductCount(product.id);
     } else {
       const newProducts = [
-        ...this.cartProductsSubj$.value,
+        ...this.cartProducts$$.value,
         {
           ...product,
           productCount: 1,
@@ -27,17 +23,17 @@ export class CartControllerService {
       ];
       console.log(newProducts);
 
-      this.cartProductsSubj$.next(newProducts);
+      this.cartProducts$$.next(newProducts);
     }
   }
 
   deleteProduct(id: number) {
-    const newProducts = this.cartProductsSubj$.value.filter(
+    const newProducts = this.cartProducts$$.value.filter(
       (item: CartModel) => item.id !== id
     );
     console.log(newProducts);
 
-    this.cartProductsSubj$.next(newProducts);
+    this.cartProducts$$.next(newProducts);
   }
 
   plusCount(id: number) {
@@ -45,7 +41,7 @@ export class CartControllerService {
   }
 
   minusCount(id: number) {
-    const productCount = this.cartProductsSubj$.value.find(
+    const productCount = this.cartProducts$$.value.find(
       (item: CartModel) => item.id === id
     )?.productCount;
     if (productCount === 1) {
@@ -56,28 +52,28 @@ export class CartControllerService {
   }
 
   private isProductInCart(productId: number) {
-    return !!this.cartProductsSubj$.value.find(
+    return !!this.cartProducts$$.value.find(
       (item: CartModel) => item.id === productId
     );
   }
 
   private addProductCount(productId: number) {
-    const newProducts = this.cartProductsSubj$.value.map((item: CartModel) =>
+    const newProducts = this.cartProducts$$.value.map((item: CartModel) =>
       item.id === productId
         ? { ...item, productCount: ++item.productCount }
         : item
     );
 
-    this.cartProductsSubj$.next(newProducts);
+    this.cartProducts$$.next(newProducts);
   }
 
   private removeProductCount(productId: number) {
-    const newProducts = this.cartProductsSubj$.value.map((item: CartModel) =>
+    const newProducts = this.cartProducts$$.value.map((item: CartModel) =>
       item.id === productId
         ? { ...item, productCount: --item.productCount }
         : item
     );
 
-    this.cartProductsSubj$.next(newProducts);
+    this.cartProducts$$.next(newProducts);
   }
 }
