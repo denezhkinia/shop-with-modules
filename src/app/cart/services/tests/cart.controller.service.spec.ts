@@ -14,3 +14,4 @@ describe('CartControllerService', () => {
     expect(service).toBeTruthy();
   });
 });
+// Обычно таких файло 1, максимум 2, поэтому не принято создавать для них отдельную папку

@@ -10,6 +10,7 @@ import { CartControllerService } from '../../services/cart.controller.service';
 export class CartComponent {
   @Input() product!: CartModel;
 
+  // я бы не внедрял зависимость, а реализовал через output
   constructor(private controller: CartControllerService) {}
 
   onDelete(id: number) {
