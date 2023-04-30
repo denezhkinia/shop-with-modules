@@ -1,19 +1,18 @@
-<mat-card>
+<mat-card swmHighlight>
   <mat-card-header>
     <mat-card-title>{{ product.name }}</mat-card-title>
   </mat-card-header>
   <mat-card-content>
     <div class="product-count">
-      <button mat-icon-button (click)="onMinus(product.id)">
+      <button mat-icon-button (click)="onQuantityDecrease(product.id)">
         <mat-icon>remove</mat-icon></button
-      >{{ product.productCount }}
-      <button mat-icon-button (click)="onPlus(product.id)">
+      >{{ product.totalQuantity }}
+      <button mat-icon-button (click)="onQuantityIncrease(product.id)">
         <mat-icon>add</mat-icon>
       </button>
     </div>
     <p class="price">
-      <span>Price:</span
-      ><strong>{{ product.price * product.productCount }}$</strong>
+      <span>Price:</span><strong>{{ product.totalCost }}$</strong>
     </p>
   </mat-card-content>
   <mat-card-actions>

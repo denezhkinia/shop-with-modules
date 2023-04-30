@@ -10,44 +10,52 @@ export class CartService {
   private cartProducts$$ = new BehaviorSubject<CartModel[]>([]);
   cartProducts$ = this.cartProducts$$.asObservable();
 
-  addNewProduct(product: ProductModel) {
-    if (this.isProductInCart(product.id)) {
-      this.addProductCount(product.id);
-    } else {
-      const newProducts = [
-        ...this.cartProducts$$.value,
-        {
-          ...product,
-          productCount: 1,
-        },
-      ];
-      console.log(newProducts);
+  get totalCost(): number {
+    return this.cartProducts$$.value.reduce(
+      (totalCost: number, product: CartModel) => {
+        totalCost += product.price * product.totalQuantity;
+        return totalCost;
+      },
+      0
+    );
+  }
 
-      this.cartProducts$$.next(newProducts);
-    }
+  get totalQuantity(): number {
+    return this.cartProducts$$
+      .getValue()
+      .reduce((totalQuantity: number, product: CartModel) => {
+        totalQuantity += product.totalQuantity;
+        return totalQuantity;
+      }, 0);
+  }
+
+  addNewProduct(product: ProductModel) {
+    const newProducts = this.isProductInCart(product.id)
+      ? this.increaseTotalQuantity(product.id)
+      : this.addNewProductToCard(product);
+
+    this.cartProducts$$.next(newProducts);
   }
 
   deleteProduct(id: number) {
     const newProducts = this.cartProducts$$.value.filter(
       (item: CartModel) => item.id !== id
     );
-    console.log(newProducts);
-
     this.cartProducts$$.next(newProducts);
   }
 
-  plusCount(id: number) {
-    this.addProductCount(id);
+  quantityIncrease(id: number) {
+    this.cartProducts$$.next(this.increaseTotalQuantity(id));
   }
 
-  minusCount(id: number) {
-    const productCount = this.cartProducts$$.value.find(
+  quantityDecrease(id: number) {
+    const totalQuantity = this.cartProducts$$.value.find(
       (item: CartModel) => item.id === id
-    )?.productCount;
-    if (productCount === 1) {
+    )?.totalQuantity;
+    if (totalQuantity === 1) {
       this.deleteProduct(id);
     } else {
-      this.removeProductCount(id);
+      this.cartProducts$$.next(this.decreaseTotalQuantity(id));
     }
   }
 
@@ -57,23 +65,43 @@ export class CartService {
     );
   }
 
-  private addProductCount(productId: number) {
-    const newProducts = this.cartProducts$$.value.map((item: CartModel) =>
-      item.id === productId
-        ? { ...item, productCount: ++item.productCount }
-        : item
-    );
-
-    this.cartProducts$$.next(newProducts);
+  private addNewProductToCard(product: ProductModel): CartModel[] {
+    const totalQuantity = 1;
+    return [
+      ...this.cartProducts$$.value,
+      {
+        ...product,
+        totalQuantity,
+        totalCost: product.price,
+      },
+    ];
   }
 
-  private removeProductCount(productId: number) {
-    const newProducts = this.cartProducts$$.value.map((item: CartModel) =>
-      item.id === productId
-        ? { ...item, productCount: --item.productCount }
-        : item
-    );
+  private increaseTotalQuantity(productId: number): CartModel[] {
+    return this.cartProducts$$.value.map((item: CartModel) => {
+      if (item.id === productId) {
+        const totalQuantity = ++item.totalQuantity;
+        return {
+          ...item,
+          totalQuantity,
+          totalCost: totalQuantity * item.price,
+        };
+      }
+      return item;
+    });
+  }
 
-    this.cartProducts$$.next(newProducts);
+  private decreaseTotalQuantity(productId: number): CartModel[] {
+    return this.cartProducts$$.value.map((item: CartModel) => {
+      if (item.id === productId) {
+        const totalQuantity = --item.totalQuantity;
+        return {
+          ...item,
+          totalQuantity,
+          totalCost: totalQuantity * item.price,
+        };
+      }
+      return item;
+    });
   }
 }

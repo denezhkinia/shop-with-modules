@@ -1,3 +1,15 @@
+.wrapper span {
+  display: inline-block;
+}
+
+.wrapper span:last-child {
+  margin-bottom: 8px;
+}
+
+.wrapper span:not(:last-child) {
+  margin-right: 8px;
+}
+
 .empty-cart {
   font-size: 32px;
   font-weight: 500;

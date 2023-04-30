@@ -6,6 +6,24 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/)
 
 ## [Unreleased]
 
+## [0.0.2] - 2023-04-30
+
+### Fixed
+
+- fix all comments
+
+### Added
+
+- modifay productListComponent
+- rename count to totalCost and add totalQuantity to CartModel
+- add disabled for button
+- add getter for totalCost add totalQuantity
+- add order module without anything
+- add changeDetectionStretegy.OnPush
+- add #appTitle for app.component
+- add directive swmHighlight
+- rename methods
+
 ## [0.0.1] - 2023-04-14
 
 ### Added

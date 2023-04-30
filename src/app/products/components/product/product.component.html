@@ -1,4 +1,4 @@
-<mat-card>
+<mat-card swmHighlight>
   <mat-card-header>
     <mat-card-title>{{ product.name }}</mat-card-title>
     <mat-card-subtitle>{{ product.category }}</mat-card-subtitle>
@@ -10,6 +10,13 @@
     </p>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-raised-button color="primary" (click)="onBuy()">Buy</button>
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="onBuy()"
+      [disabled]="!product.isAvailable"
+    >
+      Buy
+    </button>
   </mat-card-actions>
 </mat-card>

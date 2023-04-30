@@ -1,11 +1,20 @@
 <h2>Cart List</h2>
-<div *ngIf="(products$ | async)?.length; else emptyCart" class="wrapper">
+<div class="wrapper">
+  <span>
+    Total quantity:<strong> {{ totalQuantity }}</strong>
+  </span>
+  <span>
+    Total cost: <strong>{{ totalCost }}</strong>
+  </span>
+</div>
+
+<div *ngIf="products.length; else emptyCart" class="wrapper">
   <swm-cart
-    *ngFor="let product of products$ | async; trackBy: trackById"
+    *ngFor="let product of products; trackBy: trackById"
     [product]="product"
-    (delete)="onDelete($event)"
-    (plus)="onPlus($event)"
-    (minus)="onMinus($event)"
+    (delete)="deleteProduct($event)"
+    (quantityIncrease)="quantityIncrease($event)"
+    (quantityDecrease)="quantityDecrease($event)"
   ></swm-cart>
 </div>
 
