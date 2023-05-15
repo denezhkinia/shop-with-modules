@@ -7,6 +7,7 @@ import { ProductsMock } from '../mocks/product.mock';
 })
 export class ProductsService {
   getProducts(): Array<ProductModel> {
-    return JSON.parse(JSON.stringify(ProductsMock));
+    // return JSON.parse(JSON.stringify(ProductsMock));
+    return ProductsMock;
   }
 }
